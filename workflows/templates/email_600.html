@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ subject }}</title>
+</head>
+<body style="margin:0;padding:0;background-color:{{ color.secondary }};">
+<div data-slot="preheader" style="display:none;max-height:0;overflow:hidden;opacity:0;">{{ preheader }}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:{{ color.secondary }};">
+<tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background-color:#FFFFFF;">
+
+<tr><td style="padding:20px 32px;">
+{%- if logo_src %}<img data-slot="logo" src="{{ logo_src }}" alt="{{ brand_name }}" height="40" style="display:block;height:40px;border:0;">
+{%- else %}<span data-slot="logo" style="font-family:{{ font.heading }};font-size:22px;font-weight:bold;color:{{ color.primary }};">{{ brand_name }}</span>{% endif -%}
+</td></tr>
+
+<tr><td style="background-color:{{ color.primary }};padding:28px 32px;">
+<h1 data-slot="header" style="margin:0;font-family:{{ font.heading }};font-size:26px;line-height:32px;color:#FFFFFF;">{{ headline }}</h1>
+</td></tr>
+
+<tr><td style="padding:28px 32px 8px 32px;font-family:{{ font.body }};font-size:16px;line-height:24px;color:{{ color.text }};">
+{% for p in body %}<p data-slot="body" style="margin:0 0 16px 0;">{{ p }}</p>
+{% endfor %}</td></tr>
+
+{% if claims %}<tr><td style="padding:0 32px 8px 32px;font-family:{{ font.body }};font-size:16px;line-height:24px;color:{{ color.text }};">
+<ul style="margin:0 0 16px 0;padding-left:20px;">
+{% for c in claims %}<li data-slot="claim" data-claim-id="{{ c.claim_id }}" style="margin-bottom:8px;">{{ c.text }}</li>
+{% endfor %}</ul>
+</td></tr>{% endif %}
+
+<tr><td align="center" style="padding:8px 32px 28px 32px;">
+<a data-slot="cta" href="{{ cta_url }}" style="display:inline-block;background-color:{{ color.accent }};color:#FFFFFF;font-family:{{ font.body }};font-size:16px;font-weight:bold;text-decoration:none;padding:14px 28px;border-radius:4px;">{{ cta_text }}</a>
+</td></tr>
+
+<tr><td data-slot="isi" style="padding:20px 32px;border-top:2px solid {{ color.primary }};background-color:{{ color.secondary }};font-family:{{ font.body }};font-size:13px;line-height:19px;color:{{ color.text }};">{{ isi }}</td></tr>
+
+<tr><td data-slot="footer" style="padding:20px 32px;font-family:{{ font.body }};font-size:12px;line-height:18px;color:#6B7280;">
+{% for line in footer_lines %}<p style="margin:0 0 8px 0;">{{ line }}</p>
+{% endfor %}<p style="margin:0;"><a href="{{ unsubscribe_url }}" style="color:#6B7280;">Unsubscribe</a></p>
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>

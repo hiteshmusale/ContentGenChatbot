@@ -1,0 +1,87 @@
+from datetime import datetime
+
+from pydantic import BaseModel, ConfigDict
+
+
+class _ORM(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+
+class WorkspaceIn(BaseModel):
+    name: str
+
+
+class WorkspaceOut(_ORM):
+    id: int
+    name: str
+    created_at: datetime
+
+
+class VersionOut(_ORM):
+    id: int
+    version: int
+    filename: str
+    status: str
+    created_at: datetime
+
+
+class DocumentOut(_ORM):
+    id: int
+    doc_type: str
+    versions: list[VersionOut]
+
+
+class BrandTokenOut(_ORM):
+    category: str
+    key: str
+    value: str
+
+
+class PersonaOut(_ORM):
+    name: str
+    description: str
+    tone: str
+    language: str
+    concerns: list[str]
+
+
+class ClaimOut(_ORM):
+    claim_id: str
+    product: str
+    text: str
+    reference: str
+
+
+class RuleOut(_ORM):
+    rule_type: str
+    name: str | None
+    value: str
+
+
+class SessionOut(_ORM):
+    id: str
+    workspace_id: int
+    title: str
+    created_at: datetime
+
+
+class MessageIn(BaseModel):
+    content: str
+
+
+class PlanDecisionIn(BaseModel):
+    decision: Literal["approve", "reject", "edit"]
+    feedback: str | None = None
+
+
+class ChatMessageOut(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str
+
+
+class ChatStateOut(BaseModel):
+    session_id: str
+    messages: list[ChatMessageOut]
+    awaiting_approval: bool
+    plan: dict | None
+    result: dict | None
